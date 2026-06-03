@@ -1,0 +1,216 @@
+/* ========================================
+   FreshScan GPT — Design System
+   Dark theme with green accents
+   ======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* ── Colors: Backgrounds ── */
+  --bg-primary: #1a1a1e;
+  --bg-secondary: #222226;
+  --bg-surface: #2a2a2e;
+  --bg-surface-hover: #323236;
+  --bg-elevated: #333338;
+  --bg-input: #2e2e32;
+
+  /* ── Colors: Accents ── */
+  --accent-primary: #4CAF50;
+  --accent-primary-hover: #66BB6A;
+  --accent-primary-dim: rgba(76, 175, 80, 0.15);
+  --accent-primary-glow: rgba(76, 175, 80, 0.3);
+  --accent-secondary: #81C784;
+  --accent-danger: #EF5350;
+  --accent-warning: #FFA726;
+  --accent-info: #42A5F5;
+
+  /* ── Colors: Text ── */
+  --text-primary: #E8E8EC;
+  --text-secondary: #A0A0A8;
+  --text-tertiary: #6B6B73;
+  --text-inverse: #1a1a1e;
+  --text-accent: #81C784;
+  --text-link: #66BB6A;
+
+  /* ── Colors: Borders ── */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --border-accent: rgba(76, 175, 80, 0.3);
+
+  /* ── Colors: Status ── */
+  --status-fresh: #4CAF50;
+  --status-moderate: #FFA726;
+  --status-spoiled: #EF5350;
+
+  /* ── Typography ── */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-xs: 0.6875rem;    /* 11px */
+  --font-sm: 0.8125rem;    /* 13px */
+  --font-base: 0.9375rem;  /* 15px */
+  --font-md: 1rem;         /* 16px */
+  --font-lg: 1.25rem;      /* 20px */
+  --font-xl: 1.5rem;       /* 24px */
+  --font-2xl: 2rem;        /* 32px */
+  --font-3xl: 2.5rem;      /* 40px */
+
+  /* ── Spacing ── */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* ── Border Radius ── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 50%;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(76, 175, 80, 0.15);
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+  --transition-spring: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Layout ── */
+  --sidebar-width: 260px;
+  --sidebar-collapsed: 0px;
+  --header-height: 56px;
+  --input-bar-height: 68px;
+  --max-chat-width: 800px;
+}
+
+/* ── Global Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--text-link);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-primary-hover);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-family);
+  font-size: var(--font-base);
+  color: var(--text-primary);
+  outline: none;
+}
+
+input, textarea {
+  font-family: var(--font-family);
+  font-size: var(--font-base);
+  color: var(--text-primary);
+  outline: none;
+  border: none;
+  background: none;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* ── Utility Classes ── */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ── Toast Notifications ── */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast {
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-lg);
+  animation: toastIn 0.3s var(--transition-spring), toastOut 0.3s ease 2.7s forwards;
+  max-width: 360px;
+}
+
+.toast.success {
+  border-color: var(--accent-primary);
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), var(--bg-elevated));
+}
+
+.toast.error {
+  border-color: var(--accent-danger);
+  background: linear-gradient(135deg, rgba(239, 83, 80, 0.15), var(--bg-elevated));
+}
+
+@keyframes toastIn {
+  from { transform: translateX(100px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes toastOut {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(100px); opacity: 0; }
+}

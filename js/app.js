@@ -43,9 +43,16 @@ function setupUI() {
   const signOutBtn = document.getElementById('signOutBtn');
   if (signOutBtn) {
     signOutBtn.addEventListener('click', () => {
-      localStorage.removeItem('freshscan_user');
-      localStorage.removeItem('freshscan_chats');
-      window.location.href = 'index.html';
+      auth.signOut()
+        .then(() => {
+          localStorage.removeItem('freshscan_user');
+          localStorage.removeItem('freshscan_chats');
+          window.location.href = 'index.html';
+        })
+        .catch((error) => {
+          console.error('Sign out error:', error);
+          showAppToast('Error signing out. Try again.', 'error');
+        });
     });
   }
 

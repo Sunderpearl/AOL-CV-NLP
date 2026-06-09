@@ -122,9 +122,29 @@ class ChatEngine {
     this.isProcessing = true;
     this.renderMessage('user', text);
     this.showTyping();
-    const response = await this.getMockTextResponse(text);
+    
+    let responseText = "Sorry, I couldn't reach the AI server at the moment. Please make sure the backend is running.";
+    try {
+      const res = await fetch('http://localhost:5001/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: text })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        responseText = data.response || responseText;
+      } else {
+        const err = await res.json();
+        responseText = `Error: ${err.error || res.statusText}`;
+      }
+    } catch (error) {
+      console.error("Chat error:", error);
+    }
+    
     this.hideTyping();
-    this.renderMessage('assistant', response);
+    this.renderMessage('assistant', responseText);
     this.isProcessing = false;
     this.saveChatHistory();
   }
@@ -135,10 +155,31 @@ class ChatEngine {
     const dataUrl = await imageUploader.readAsDataURL(file);
     this.renderMessage('user', caption || 'Please analyze this image for freshness.', { imageUrl: dataUrl });
     this.showTyping();
-    await this.delay(2000 + Math.random() * 1500);
-    const result = this.getMockFreshnessResult(file.name);
-    this.hideTyping();
-    this.renderMessage('assistant', result.summary, { freshnessResult: result });
+    
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      
+      const res = await fetch('http://localhost:5001/api/freshness', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (res.ok) {
+        const result = await res.json();
+        this.hideTyping();
+        this.renderMessage('assistant', result.summary, { freshnessResult: result });
+      } else {
+        const err = await res.json();
+        this.hideTyping();
+        this.renderMessage('assistant', `Failed to analyze image: ${err.error || res.statusText}`);
+      }
+    } catch (error) {
+      console.error("Analysis error:", error);
+      this.hideTyping();
+      this.renderMessage('assistant', "Connection error: Could not connect to the freshness analysis service.");
+    }
+    
     this.isProcessing = false;
     this.saveChatHistory();
   }

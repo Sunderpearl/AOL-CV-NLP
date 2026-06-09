@@ -163,6 +163,18 @@ def initialize_nlp_model():
 
 # ── API Endpoints ────────────────────────────────────────────────────────────
 
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({
+        "name": "FreshScan GPT API",
+        "status": "active",
+        "endpoints": {
+            "health": "/health",
+            "freshness": "/api/freshness (POST)",
+            "chat": "/api/chat (POST)"
+        }
+    })
+
 @app.route('/health', methods=['GET'])
 def health():
     return jsonify({

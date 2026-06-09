@@ -276,7 +276,7 @@ def chat():
                 "options": {
                     "temperature": 0.7,
                     "top_p": 0.9,
-                    "num_predict": 120
+                    "num_predict": 256
                 }
             }
             res = requests.post("http://localhost:11434/api/generate", json=payload, timeout=30)
@@ -291,7 +291,7 @@ def chat():
             with torch.no_grad():
                 outputs = nlp_model.generate(
                     **inputs,
-                    max_new_tokens=120,
+                    max_new_tokens=256,
                     pad_token_id=nlp_tokenizer.pad_token_id,
                     eos_token_id=nlp_tokenizer.eos_token_id,
                     do_sample=True,

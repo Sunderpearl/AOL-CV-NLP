@@ -1,0 +1,11 @@
+.git
+.gitignore
+.dockerignore
+.vscode
+.env
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+node_modules/
+AOL-FreshScanGPT/

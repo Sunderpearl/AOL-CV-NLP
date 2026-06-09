@@ -16,7 +16,7 @@ from flask_cors import CORS
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.', static_url_path='')
 # Enable CORS for all routes so the frontend can query it from any local server origin
 CORS(app)
 
@@ -165,15 +165,7 @@ def initialize_nlp_model():
 
 @app.route('/', methods=['GET'])
 def index():
-    return jsonify({
-        "name": "FreshScan GPT API",
-        "status": "active",
-        "endpoints": {
-            "health": "/health",
-            "freshness": "/api/freshness (POST)",
-            "chat": "/api/chat (POST)"
-        }
-    })
+    return app.send_static_file('index.html')
 
 @app.route('/health', methods=['GET'])
 def health():

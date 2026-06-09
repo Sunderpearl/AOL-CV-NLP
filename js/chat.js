@@ -125,7 +125,7 @@ class ChatEngine {
     
     let responseText = "Sorry, I couldn't reach the AI server at the moment. Please make sure the backend is running.";
     try {
-      const res = await fetch('http://localhost:5001/api/chat', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -160,7 +160,7 @@ class ChatEngine {
       const formData = new FormData();
       formData.append('image', file);
       
-      const res = await fetch('http://localhost:5001/api/freshness', {
+      const res = await fetch('/api/freshness', {
         method: 'POST',
         body: formData
       });

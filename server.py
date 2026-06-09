@@ -315,18 +315,18 @@ def chat():
         print("Error in chat text generation:", e)
         return jsonify({"error": str(e)}), 500
 
+# Initialize both models synchronously on startup
+try:
+    initialize_cv_model()
+except Exception as e:
+    print("Failed to load CV model:", e)
+    
+try:
+    initialize_nlp_model()
+except Exception as e:
+    print("Failed to load NLP model:", e)
+
 if __name__ == '__main__':
-    # Initialize both models synchronously on startup
-    try:
-        initialize_cv_model()
-    except Exception as e:
-        print("Failed to load CV model:", e)
-        
-    try:
-        initialize_nlp_model()
-    except Exception as e:
-        print("Failed to load NLP model:", e)
-        
     print("Starting Flask server on port 5001...")
     app.run(host='0.0.0.0', port=5001, debug=False)
 

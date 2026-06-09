@@ -80,7 +80,7 @@ def initialize_cv_model():
     print("Initializing ResNet-50 CV Model...")
     t0 = time.time()
     
-    cv_dir = "/Users/sunderpearl/Downloads/AOL-CV-NLP-main/CVmodel"
+    cv_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "CVmodel")
     
     # Pack the unzipped folder into an in-memory zip file to load via torch.load
     buf = io.BytesIO()
@@ -145,7 +145,7 @@ def initialize_nlp_model():
         
     t0 = time.time()
     base_model_name = "microsoft/phi-2"
-    adapter_model_dir = "/Users/sunderpearl/Downloads/AOL-CV-NLP-main/NLPmodel/phi2-fruit-freshness-lora"
+    adapter_model_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "NLPmodel", "phi2-fruit-freshness-lora")
     
     nlp_tokenizer = AutoTokenizer.from_pretrained(adapter_model_dir)
     if nlp_tokenizer.pad_token is None:

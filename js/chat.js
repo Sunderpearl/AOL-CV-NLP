@@ -3,6 +3,17 @@
 // Handles messages, mock CV/NLP responses
 // ========================================
 
+// Dynamic API URL Helper to support localhost:8000, file://, and unified hosting
+function getApiUrl(endpoint) {
+  if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '8000') {
+    return `http://localhost:5001${endpoint}`;
+  }
+  if (window.location.protocol === 'file:') {
+    return `http://localhost:5001${endpoint}`;
+  }
+  return endpoint;
+}
+
 class ChatEngine {
   constructor() {
     this.chatArea = null;
@@ -125,7 +136,7 @@ class ChatEngine {
     
     let responseText = "Sorry, I couldn't reach the AI server at the moment. Please make sure the backend is running.";
     try {
-      const res = await fetch('/api/chat', {
+      const res = await fetch(getApiUrl('/api/chat'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -160,7 +171,7 @@ class ChatEngine {
       const formData = new FormData();
       formData.append('image', file);
       
-      const res = await fetch('/api/freshness', {
+      const res = await fetch(getApiUrl('/api/freshness'), {
         method: 'POST',
         body: formData
       });

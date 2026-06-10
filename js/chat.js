@@ -5,7 +5,9 @@
 
 // Dynamic API URL Helper to support localhost:8000, file://, and unified hosting
 function getApiUrl(endpoint) {
-  if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '8000') {
+  const host = window.location.hostname;
+  const isLocalHost = host === 'localhost' || host === '127.0.0.1' || host === '[::1]' || host === '::1';
+  if (isLocalHost && window.location.port === '8000') {
     return `http://localhost:5001${endpoint}`;
   }
   if (window.location.protocol === 'file:') {
